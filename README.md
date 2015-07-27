@@ -12,6 +12,7 @@ To make this work, you need to:
     - `APP_SUBDIR=web` is the name of the subdirectory that your Rails app lives in
     - `BUNDLE_GEMFILE=web/Gemfile` is the location of the `Gemfile` of your Rails app
 2. Make a copy of your Rakefile in the root directory, and edit the require line to point to your rails subdirectory. For example:
+
     ```ruby
     # Add your own tasks in files placed in lib/tasks ending in .rake,
     # for example lib/tasks/capistrano.rake, and they will automatically be available to Rake.
