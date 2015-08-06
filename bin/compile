@@ -11,6 +11,10 @@ begin
   LanguagePack::Instrument.trace 'compile', 'app.compile' do
     if pack = LanguagePack.detect(ARGV[0], ARGV[1])
       LanguagePack::ShellHelpers.initialize_env(ARGV[2])
+
+      build_path = LanguagePack::ShellHelpers.user_env_hash["BUILD_PATH"]
+      pack.topic("Build path #{build_path}")
+
       pack.topic("Compiling #{pack.name}")
       pack.log("compile") do
         pack.compile
