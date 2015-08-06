@@ -113,7 +113,7 @@ class LanguagePack::Base
     if build_path != ENV["ORIGINAL_BUILD_PATH"]
       contents = File.read(procfile)
       prefix = "cd #{env("BUILD_PATH")} &&"
-      patched = contents.gsub(/^([^:]+):(.+)$/, "\1: #{prefix} \2")
+      patched = contents.gsub(/^([^:]+):\s*(.+)$/, "\\1: #{prefix} \\2")
       destination = "#{ENV["ORIGINAL_BUILD_PATH"]}/#{procfile}"
 
       File.open(destination, 'w') do |file|
