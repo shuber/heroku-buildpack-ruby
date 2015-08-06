@@ -60,10 +60,6 @@ class LanguagePack::Ruby < LanguagePack::Base
         "LANG" => env("LANG") || "en_US.UTF-8"
       }
 
-      if buildpath = env("BUILD_PATH")
-        vars["BUILD_PATH"] = "/" + buildpath
-      end
-
       ruby_version.jruby? ? vars.merge({
         "JAVA_OPTS" => default_java_opts,
         "JRUBY_OPTS" => default_jruby_opts
