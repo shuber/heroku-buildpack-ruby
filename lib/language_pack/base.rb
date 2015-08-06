@@ -104,10 +104,21 @@ class LanguagePack::Base
       f.write(release.to_yaml)
     end
 
-    unless File.exist?("Procfile")
-      msg =  "No Procfile detected, using the default web server (webrick)\n"
-      msg << "https://devcenter.heroku.com/articles/ruby-default-web-server"
-      warn msg
+    procfile = "Procfile"
+
+    unless File.exist?(procfile)
+      raise "Must specify a Procfile in your application build path"
+    end
+
+    if build_path != ENV["ORIGINAL_BUILD_PATH"]
+      contents = File.read(procfile)
+      prefix = "cd #{env("BUILD_PATH")} &&"
+      patched = contents.gsub(/^([^:]+):(.+)$/, "\1: #{prefix} \2")
+      destination = "#{ENV["ORIGINAL_BUILD_PATH"]}/#{procfile}"
+
+      File.open(destination, 'w') do |file|
+        file.write(patched)
+      end
     end
   end
 

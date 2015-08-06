@@ -12,6 +12,7 @@ begin
     LanguagePack::ShellHelpers.initialize_env(ARGV[2])
 
     if build_path = LanguagePack::ShellHelpers.user_env_hash["BUILD_PATH"]
+      ENV['ORIGINAL_BUILD_PATH'] = ARGV[0]
       ARGV[0] = ARGV[0] + "/" + build_path
     end
 
