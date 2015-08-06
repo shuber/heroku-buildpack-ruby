@@ -15,6 +15,8 @@ begin
       ARGV[0] = ARGV[0] + "/" + build_path
     end
 
+    Dir.chdir(ARGV[0])
+
     if pack = LanguagePack.detect(ARGV[0], ARGV[1])
       pack.topic("Build path: #{ARGV[0]}")
       pack.topic("Compiling #{pack.name}")
