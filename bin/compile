@@ -11,8 +11,9 @@ begin
   LanguagePack::Instrument.trace 'compile', 'app.compile' do
     LanguagePack::ShellHelpers.initialize_env(ARGV[2])
 
+    ENV['ORIGINAL_BUILD_PATH'] = ARGV[0]
+
     if build_path = LanguagePack::ShellHelpers.user_env_hash["BUILD_PATH"]
-      ENV['ORIGINAL_BUILD_PATH'] = ARGV[0]
       ARGV[0] = ARGV[0] + "/" + build_path
     end
 

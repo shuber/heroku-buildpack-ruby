@@ -120,11 +120,19 @@ private
   end
 
   def binstubs_relative_paths
-    [
+    paths = [
       "bin",
       bundler_binstubs_path,
       "#{slug_vendor_base}/bin"
     ]
+
+    if build_path = env("BUILD_PATH")
+      paths << "#{build_path}/bin"
+      paths << "#{build_path}/#{bundler_binstubs_path}"
+      paths << "#{build_path}/#{slug_vendor_base}/bin"
+    end
+
+    paths
   end
 
   def system_paths
