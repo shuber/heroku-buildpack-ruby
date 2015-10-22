@@ -94,13 +94,23 @@ class LanguagePack::Ruby < LanguagePack::Base
         create_database_yml
         install_binaries
         run_assets_precompile_rake_task
-        create_base_path_symlinks if app_subdir?
+
+        if app_subdir?
+          overwrite_home_directory_in_profiled
+          create_base_path_symlinks
+        end
       end
       super
     end
   end
 
 private
+
+  def overwrite_home_directory_in_profiled
+    File.open("#{build_path}/.profile.d/path.sh", "a") do |file|
+      file.puts "HOME=$HOME/$APP_SUBDIR"
+    end
+  end
 
   # the base PATH environment variable to be used
   # @return [String] the resulting PATH
