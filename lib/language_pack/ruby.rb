@@ -108,7 +108,7 @@ private
 
   def overwrite_home_directory_in_profiled
     File.open("#{build_path}/.profile.d/path.sh", "a") do |file|
-      file.puts "HOME=$HOME/$APP_SUBDIR"
+      file.puts "cd $HOME/$APP_SUBDIR"
     end
   end
 
