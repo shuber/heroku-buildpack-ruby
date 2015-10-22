@@ -96,7 +96,7 @@ class LanguagePack::Ruby < LanguagePack::Base
         run_assets_precompile_rake_task
 
         if app_subdir?
-          overwrite_home_directory_in_profiled
+          cd_into_home_directory_from_profiled
           create_base_path_symlinks
         end
       end
@@ -106,7 +106,7 @@ class LanguagePack::Ruby < LanguagePack::Base
 
 private
 
-  def overwrite_home_directory_in_profiled
+  def cd_into_home_directory_from_profiled
     File.open("#{build_path}/.profile.d/path.sh", "a") do |file|
       file.puts "cd $HOME/$APP_SUBDIR"
     end
@@ -878,6 +878,7 @@ params = CGI.parse(uri.query || "")
   def create_base_path_symlinks
     Dir.chdir(@base_path) do
       FileUtils.mkdir_p('vendor')
+      create_base_symlink('Procfile')
       create_base_symlink('.profile.d')
       create_base_symlink('bin')
       create_base_symlink('tmp')

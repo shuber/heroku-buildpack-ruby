@@ -38,9 +38,6 @@ class LanguagePack::Base
       @deprecations  = []
       @fetchers      = {:buildpack => LanguagePack::Fetcher.new(VENDOR_URL) }
 
-      # We don't need to use this for the build process
-      user_env_hash.delete('BUNDLE_GEMFILE')
-
       Dir.chdir build_path
     end
   end
@@ -113,7 +110,7 @@ class LanguagePack::Base
       f.write(release.to_yaml)
     end
 
-    unless File.exist?(File.join @base_path, "Procfile")
+    unless File.exist?("Procfile")
       msg =  "No Procfile detected, using the default web server (webrick)\n"
       msg << "https://devcenter.heroku.com/articles/ruby-default-web-server"
       warn msg
